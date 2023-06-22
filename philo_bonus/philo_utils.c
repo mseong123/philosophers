@@ -6,7 +6,7 @@
 /*   By: melee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 08:06:57 by melee             #+#    #+#             */
-/*   Updated: 2023/06/20 12:22:40 by melee            ###   ########.fr       */
+/*   Updated: 2023/06/22 17:30:49 by melee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,16 @@ int	timestamp(t_param *ptr)
 void	wait_kill(t_param *ptr, char **argv)
 {
 	int	i;
-	(void)argv;
 
 	i = 0;
 	if (ptr->num_to_eat != -1)
 	{
 		while (i < ft_atoi(argv[1]))
-		{
-			
+		{	
 			waitpid(-1, &ptr->exit_status, 0);
-			printf("here\n");
-			if (WIFEXITED(ptr->exit_status) && WEXITSTATUS(ptr->exit_status) == 1)
-			{
-				printf("kill\n");
+			if (WIFEXITED(ptr->exit_status)
+				&& WEXITSTATUS(ptr->exit_status) == 1)
 				kill_all_process(ptr, argv);
-			}
 			i++;
 		}
 	}
@@ -73,8 +68,6 @@ void	display_sub(t_param *ptr, t_philo *philo, char *str)
 	{
 		printf("%d %d is eating\n", timestamp(ptr), philo->philo_no);
 		philo->ate++;
-		printf("ate %d\n", philo->ate);
-		printf("no to eat %d\n", ptr->num_to_eat);
 		if (philo->ate == ptr->num_to_eat)
 		{
 			sem_post(ptr->write);
@@ -90,7 +83,6 @@ void	display_sub(t_param *ptr, t_philo *philo, char *str)
 	if (!ft_strcmp(str, "died"))
 	{
 		printf("%d %d died\n", timestamp(ptr), philo->philo_no);
-		sem_post(ptr->write);
 		exit(1);
 	}
 }
@@ -98,11 +90,6 @@ void	display_sub(t_param *ptr, t_philo *philo, char *str)
 void	display(t_param *ptr, t_philo *philo, char *str)
 {
 	sem_wait(ptr->write);
-	if (!philo->died)
-	{
-		if ((ptr->num_to_eat != -1 && philo->ate != ptr->num_to_eat)
-			|| ptr->num_to_eat == -1)
-			display_sub(ptr, philo, str);
-	}
+	display_sub(ptr, philo, str);
 	sem_post(ptr->write);
 }

@@ -14,13 +14,15 @@
 
 void	eat(t_param *ptr, t_philo *philo)
 {
+	if (philo->t_last_eat == 0 && philo->philo_no % 2 == 0)
+		mod_usleep(ptr->t_to_eat, ptr);
 	sem_wait(ptr->fork);
 	display(ptr, philo, "fork");
 	sem_wait(ptr->fork);
 	display(ptr, philo, "fork");
-	sem_wait(ptr->eat_die);
+	sem_wait(philo->eat_die);
 	philo->t_last_eat = timestamp(ptr);
-	sem_post(ptr->eat_die);
+	sem_post(philo->eat_die);
 	display(ptr, philo, "eating");
 	mod_usleep(ptr->t_to_eat, ptr);
 	sem_post(ptr->fork);
@@ -43,15 +45,13 @@ void	*check_died(void *arg)
 	t_param	*ptr;
 
 	ptr = (t_param *)arg;
-	while (!ptr->philo->died)
+	while (1)
 	{
-		if (ptr->num_to_eat != -1 && ptr->philo->ate == ptr->num_to_eat)
-			exit(0);
-		sem_wait(ptr->eat_die);
+		sem_wait(ptr->philo->eat_die);
 		if ((timestamp(ptr) - ptr->philo->t_last_eat)
 			> ptr->t_to_die)
 			display(ptr, ptr->philo, "died");
-		sem_post(ptr->eat_die);
+		sem_post(ptr->philo->eat_die);
 	}
 	return (NULL);
 }

@@ -32,6 +32,7 @@ typedef struct s_philo
 	int			ate;
 	int			died;
 	pthread_t	thread;
+	sem_t		*eat_die;
 }	t_philo;
 
 typedef struct s_param
@@ -44,7 +45,6 @@ typedef struct s_param
 	struct timeval	start_time;
 	sem_t			*write;
 	sem_t			*fork;
-	sem_t			*eat_die;
 	int				process[200];
 	int				exit_status;
 	t_philo			*philo;
@@ -64,5 +64,7 @@ void	mod_usleep(int time, t_param *ptr);
 void	kill_all_process(t_param *ptr, char **argv);
 void	mod_usleep(int time, t_param *ptr);
 void	wait_kill(t_param *ptr, char **argv);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

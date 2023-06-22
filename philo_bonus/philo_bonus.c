@@ -27,6 +27,21 @@ void	start_process(t_param *ptr)
 	}
 }
 
+void	launch(t_param *ptr, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < ft_atoi(argv[1]))
+	{
+		ptr->philo_no++;
+		ptr->process[i] = fork();
+		if (ptr->process[i] == 0)
+			start_process(ptr);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_param	ptr;
@@ -45,14 +60,7 @@ int	main(int argc, char **argv)
 			printf("%d %d died\n", ft_atoi(argv[2]), 1);
 			return (EXIT_SUCCESS);
 		}
-		while (i < ft_atoi(argv[1]))
-		{
-			ptr.philo_no++;
-			ptr.process[i] = fork();
-			if (ptr.process[i] == 0)
-				start_process(&ptr);
-			i++;
-		}
+		launch(&ptr, argv);
 		wait_kill(&ptr, argv);
 	}
 	else
