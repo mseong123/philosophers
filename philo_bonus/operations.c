@@ -44,8 +44,11 @@ void	*check_died(void *arg)
 	t_param	*ptr;
 
 	ptr = (t_param *)arg;
+	printf("HERE %d\n", ptr->philo->philo_no);
 	while (!ptr->philo->died)
 	{
+	
+
 		if (ptr->num_to_eat != -1 && ptr->philo->ate == ptr->num_to_eat)
 			exit(0);
 		i = 0;
@@ -58,7 +61,6 @@ void	*check_died(void *arg)
 			sem_post(ptr->philo->eat_die);
 			i++;
 		}
-		
 	}
 	return (NULL);
 }

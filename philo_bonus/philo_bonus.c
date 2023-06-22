@@ -18,11 +18,13 @@ void	start_process(t_param *ptr)
 
 	init_philo(ptr, &philo);
 	ptr->philo = &philo;
-	pthread_create(&philo.thread, NULL, check_died, &ptr);
+	//pthread_create(&philo.thread, NULL, check_died, &ptr);
 	while (!philo.died)
 	{
+		
 		if (philo.ate == ptr->num_to_eat)
 			exit(0) ;
+		
 		eat(ptr, &philo);
 		philo_sleep(ptr, &philo);
 		think(ptr, &philo);
@@ -50,13 +52,14 @@ int	main(int argc, char **argv)
 		}
 		while (i < ft_atoi(argv[1]))
 		{
+			
 			ptr.philo_no++;
 			ptr.process[i] = fork();
 			if (ptr.process[i] == 0)
 				start_process(&ptr);
 			i++;
 		}
-		exec_wait_kill(&ptr, argv);
+		wait_kill(&ptr, argv);
 	}
 	else
 		printf("Incorrect no. of parameters\n");

@@ -23,21 +23,26 @@ int	timestamp(t_param *ptr)
 	return (res);
 }
 
-void	exec_wait_kill(t_param *ptr, char **argv)
+void	wait_kill(t_param *ptr, char **argv)
 {
 	int	i;
 
 	i = 0;
+	
 	if (ptr->num_to_eat != -1)
+	{
 		while (i++ < ptr->num_to_eat)
 		{
 			waitpid(-1, &ptr->exit_status, 0);
 			if (WIFEXITED(ptr->exit_status) && WEXITSTATUS(ptr->exit_status) == 1)
 				kill_all_process(ptr, argv);
 		}
+	}
 	else
+	{
 		waitpid(-1, NULL, 0);
 		kill_all_process(ptr, argv);
+	}
 }
 
 int	ft_strcmp(char *s1, char *s2)

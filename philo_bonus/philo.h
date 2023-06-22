@@ -63,6 +63,8 @@ void	think(t_param *ptr, t_philo *philo);
 void	mod_usleep(int time, t_param *ptr);
 void	kill_all_process(t_param *ptr, char **argv);
 void	mod_usleep(int time, t_param *ptr);
-void	exec_wait_kill(t_param *ptr, char **argv);
+void	wait_kill(t_param *ptr, char **argv);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

@@ -12,21 +12,36 @@
 
 #include "philo.h"
 
-void	init_sem_parent(t_param *ptr, int philo_no)
+void	init_sem_parent(t_param *ptr, char **argv)
 {
-	ptr->write = sem_open("write", O_CREAT, 0644, 1);
-	ptr->fork = sem_open("fork", O_CREAT, 0644, philo_no);
+	ptr->write = sem_open("/write", O_CREAT, 0644, 1);
+	ptr->fork = sem_open("/fork", O_CREAT, 0644, ft_atoi(argv[1]));
 }
 
 void	init_sem_child(t_param *ptr, t_philo *philo)
 {
 	char *eat_die;
+	char *temp;
 	
-	eat_die = ft_itoa(philo->philo_no);
-	ptr->write = sem_open("write", 0);
-	ptr->fork = sem_open("fork", 0);
+	temp = ft_itoa(philo->philo_no);
+	eat_die = ft_strjoin("/", temp);
+	free(temp);
+	ptr->write = sem_open("/write", O_CREAT);
+	ptr->fork = sem_open("/fork", O_CREAT);
 	philo->eat_die = sem_open(eat_die, O_CREAT, 0644, 1);
 	free(eat_die);
+}
+
+void	init_process(t_param *ptr, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < ft_atoi(argv[1]))
+	{
+		ptr->process[i] = 0;
+		i++;
+	}
 }
 
 int	init(t_param *ptr, int argc, char **argv)
@@ -42,11 +57,12 @@ int	init(t_param *ptr, int argc, char **argv)
 	ptr->t_to_die = ft_atoi(argv[2]);
 	ptr->t_to_eat = ft_atoi(argv[3]);
 	ptr->t_to_sleep = ft_atoi(argv[4]);
-	init_sem_parent(ptr, ft_atoi(argv[1]));
 	if (argc == 5)
 		ptr->num_to_eat = -1;
 	else
 		ptr->num_to_eat = ft_atoi(argv[5]);
+	init_sem_parent(ptr, argv);
+	init_process(ptr, argv);
 	gettimeofday(&ptr->start_time, NULL);
 	return (1);
 }
