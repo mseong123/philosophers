@@ -26,16 +26,22 @@ int	timestamp(t_param *ptr)
 void	wait_kill(t_param *ptr, char **argv)
 {
 	int	i;
+	(void)argv;
 
 	i = 0;
-	
 	if (ptr->num_to_eat != -1)
 	{
-		while (i++ < ptr->num_to_eat)
+		while (i < ft_atoi(argv[1]))
 		{
+			
 			waitpid(-1, &ptr->exit_status, 0);
+			printf("here\n");
 			if (WIFEXITED(ptr->exit_status) && WEXITSTATUS(ptr->exit_status) == 1)
+			{
+				printf("kill\n");
 				kill_all_process(ptr, argv);
+			}
+			i++;
 		}
 	}
 	else
@@ -53,9 +59,7 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] == s2[i])
 	{
 		if (s1[i] == '\0')
-		{
 			return (0);
-		}
 		i++;
 	}
 	return (s1[i] - s2[i]);
@@ -69,6 +73,15 @@ void	display_sub(t_param *ptr, t_philo *philo, char *str)
 	{
 		printf("%d %d is eating\n", timestamp(ptr), philo->philo_no);
 		philo->ate++;
+		printf("ate %d\n", philo->ate);
+		printf("no to eat %d\n", ptr->num_to_eat);
+		if (philo->ate == ptr->num_to_eat)
+		{
+			sem_post(ptr->write);
+			sem_post(ptr->fork);
+			sem_post(ptr->fork);
+			exit(0);
+		}
 	}
 	if (!ft_strcmp(str, "sleeping"))
 		printf("%d %d is sleeping\n", timestamp(ptr), philo->philo_no);
@@ -77,6 +90,7 @@ void	display_sub(t_param *ptr, t_philo *philo, char *str)
 	if (!ft_strcmp(str, "died"))
 	{
 		printf("%d %d died\n", timestamp(ptr), philo->philo_no);
+		sem_post(ptr->write);
 		exit(1);
 	}
 }

@@ -18,18 +18,13 @@ void	start_process(t_param *ptr)
 
 	init_philo(ptr, &philo);
 	ptr->philo = &philo;
-	//pthread_create(&philo.thread, NULL, check_died, &ptr);
-	while (!philo.died)
+	pthread_create(&philo.thread, NULL, check_died, ptr);
+	while (1)
 	{
-		
-		if (philo.ate == ptr->num_to_eat)
-			exit(0) ;
-		
 		eat(ptr, &philo);
 		philo_sleep(ptr, &philo);
 		think(ptr, &philo);
 	}
-	exit(1);
 }
 
 int	main(int argc, char **argv)
@@ -52,7 +47,6 @@ int	main(int argc, char **argv)
 		}
 		while (i < ft_atoi(argv[1]))
 		{
-			
 			ptr.philo_no++;
 			ptr.process[i] = fork();
 			if (ptr.process[i] == 0)
