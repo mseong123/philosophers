@@ -73,7 +73,7 @@ int	init(t_param *ptr, int argc, char **argv)
 void	init_philo(t_param *ptr, t_philo *philo)
 {
 	philo->philo_no = ptr->philo_no;
-	philo->t_last_eat = 0;
+	philo->t_last_eat = timestamp(ptr);
 	philo->ate = 0;
 	philo->died = 0;
 	init_sem_child(ptr, philo);
