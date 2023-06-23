@@ -14,8 +14,6 @@
 
 void	eat(t_param *ptr, t_philo *philo)
 {
-	if (philo->t_last_eat == 0 && philo->philo_no % 2 == 0)
-		mod_usleep(ptr->t_to_eat, ptr);
 	sem_wait(ptr->fork);
 	display(ptr, philo, "fork");
 	sem_wait(ptr->fork);
