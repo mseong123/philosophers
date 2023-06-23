@@ -35,7 +35,7 @@ void	mod_usleep(int time, t_param *ptr)
 	while (j < time)
 	{
 		j = timestamp(ptr) - i;
-		usleep(200);
+		usleep(50);
 	}
 }
 
