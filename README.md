@@ -1,5 +1,7 @@
 # philosophers | 42KL
 
+![philo.gif](https://github.com/mseong123/philosophers/blob/18b304f5b143edcd73791cee300d5e7488ce2cfe/philo.gif)
+
 ## Introduction
 Philosophers is an individual project at 42 about introduction to the basics of threads, and how multiple threads can work on the same memory space using APIs such as mutexes (mutual exclusion) and semaphores preventing race conditions. Threads are a fundamental concept in modern computing, and they serve several important purposes such as:
 - Parallelism - Modern processors often have multiple cores, and threads allow a program to take advantage of these multiple cores to perform tasks concurrently. This can lead to significant performance improvements, especially in tasks that can be divided into smaller, independent subtasks.
