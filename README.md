@@ -16,7 +16,7 @@ It was originally formulated in 1965 by Edsger Dijkstra as a student exam exerci
 ## Project scope
 The scope of the project is summarised in the [pdf file](https://github.com/mseong123/philosophers/blob/bccaeeb0420a088ddb46ab2409eec01dcd0d38c8/en.subject.pdf).  To summarise, each philosopher's job is to eat, sleep and think in that order (and continue in perpetuity until somebody dies). In order to eat, the philosopher has to hold 2 forks and there is only 1 fork available for each philosopher in the program. Hence for N number of philosophers, some will have access to 2 forks and can eat and some will have to wait for their turn until another philosopher finishes eating and put down his respective fork. If a philosopher doesn't eat within a set time, he will die and program will end. We will have to implement our threading APIs including mutexes and semaphores to simulate these conditions. 
 
-<img src="https://github.com/mseong123/philosophers/blob/9bc6ff655e86bca7934cbea02cd4ef25df0769c6/philo_dining_table.png" alt="philo dining table" title="philo dining table" size="50px">
+<img src="https://github.com/mseong123/philosophers/blob/9bc6ff655e86bca7934cbea02cd4ef25df0769c6/philo_dining_table.png" alt="philo dining table" title="philo dining table" width="100px">
 
 ## Status
 
