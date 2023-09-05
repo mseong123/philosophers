@@ -39,6 +39,7 @@ To run the program:
 ```
 
 Scenarios
+
 **Scenario 1**
 ```
 ./philo 5 800 200 200
